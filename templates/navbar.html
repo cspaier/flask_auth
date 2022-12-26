@@ -1,0 +1,42 @@
+<nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">  
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+  
+    <div  class="navbar-menu">
+      <div class="navbar-start">
+        <a class="navbar-item" href="/">
+          Page d'acceuil
+        </a>
+  
+      </div>
+  
+      <div class="navbar-end">
+        {% if session['username'] %}
+        <div class="navbar-item">
+          Bonjour {{session['username']}}
+        </div>
+        <div class="navbar-item">
+          
+            <div class="buttons">
+                <a class="button is-light" href="/deconnection"> deconnection</a>
+        </div>
+        {% else  %}
+        <div class="navbar-item">
+            <div class="buttons">
+              <a class="button is-primary" href="/creer-compte">
+                <strong>Créer un compte</strong>
+              </a>
+              <a class="button is-light" href="/login">
+                Connection
+              </a>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </nav>

@@ -1,0 +1,13 @@
+
+# Utilisateur Mysql
+MYSQL_USER = ""
+# Mot de passe Mysql
+MYSQL_PASSWORD = ""
+# Base de donnée Mysql
+MYSQL_DB = "utilisateurs"
+# Classe de curseur Mysql (ne pas modifier)
+MYSQL_CURSORCLASS = "DictCursor"
+
+# Clef secrète Flask: https://flask.palletsprojects.com/en/2.2.x/config/#SECRET_KEY
+SECRET_KEY = 'Changez moi en production!'
+# python -c 'import secrets; print(secrets.token_hex())'
