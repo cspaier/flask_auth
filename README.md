@@ -10,17 +10,17 @@ Un projet non pédagogique choisirai probablement un ORM du type [SQLalchemy](ht
 Le stockage des mots de passe est fait en SHA256 sans salage. Un projet non pédagogique utiliserait les fonctions de [werkzeug](https://werkzeug.palletsprojects.com/en/2.2.x/utils/#module-werkzeug.security) ou [flask-Bcrypt](https://flask-bcrypt.readthedocs.io/en/1.0.1/).
 
 ## Déploiement sous debian:
-1. Installation des dépendances systeme
+
+
+1. Installation des dépendances système:
 
 `sudo apt install python3-dev default-libmysqlclient-dev build-essential`
 
 2. Mise en place de l'environnement python
 
-créer un dossier de travail: `mkdir flask_auth`
+Cloner le dépot: `git clone git@github.com:cspaier/flask_auth.git`
 
-S'y rendre: `cd mkdir`
-
-Cloner le dépot: `git clone ????`
+Se rendre dans le dossier `flask_auth`: `cd flask_auth`
 
 Créer un environnement virtuel python: `python3 -m venv venv`
 
@@ -43,7 +43,24 @@ MYSQL_USER = ""
 MYSQL_PASSWORD = ""
 ```
 
-5. Générer une [clef secrète Flask](https://flask.palletsprojects.com/en/2.2.x/config/#SECRET_KEY)
+5. Tester le serveur:
+Vous pouvez lancer le serveur pour tester avec `flask --app flask_auth.py --debug run`
+```sh
+(venv)flask_auth$ flask --app flask_auth.py --debug run
+ * Serving Flask app 'flask_auth.py'
+ * Debug mode: on
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+Press CTRL+C to quit
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 115-130-398
+```
+
+
+### Mise en production
+
+1. Générer une [clef secrète Flask](https://flask.palletsprojects.com/en/2.2.x/config/#SECRET_KEY)
 Coller le résultat de cette commande dans le fichier de configuration `config.toml`:
 `python -c 'import secrets; print(secrets.token_hex())'`
 
@@ -52,21 +69,7 @@ Coller le résultat de cette commande dans le fichier de configuration `config.t
 SECRET_KEY = 'Changez moi en production!'
 ```
 
-6. Tester le serveur:
-Vous pouvez lancer le serveur pour tester avec `flask --app flask_auth.py run`
-```sh
-flask_auth_exemple$ flask --app flask_auth.py run
- * Serving Flask app 'flask_auth.py'
- * Debug mode: off
-WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
- * Running on http://127.0.0.1:5000
-Press CTRL+C to quit
-```
-
-
-### Mise en production
-
-1. Tester le serveur derrière gunicorn: `gunicorn --bind 127.0.0.1:8080 --config gunicorn_config.py wsgi:app`
+2. Tester le serveur derrière gunicorn: `gunicorn --bind 127.0.0.1:8080 --config gunicorn_config.py wsgi:app`
 Le service sera accessible à l'adresse `http://127.0.0.1:8080`
 ```
 flask_auth_exemple$ gunicorn --bind 127.0.0.1:8080 --config gunicorn_config.py wsgi:app
@@ -77,7 +80,7 @@ flask_auth_exemple$ gunicorn --bind 127.0.0.1:8080 --config gunicorn_config.py w
 ```
 
 
-2. Créer un service systemd
+3. Créer un service systemd
 `sudo nano /etc/systemd/system/flask_auth.service`
 Le fichier contiendra ce qui suit:
 ```
@@ -102,7 +105,7 @@ $ sudo systemctl start flask_auth_.service
 $ sudo systemctl enable flask_auth_.service
 ```
 
-3. Créer un serveur virtuel Apache2
+4. Créer un serveur virtuel Apache2
 Le fichier devra contenir la balise location suivante
 ```
 	<Location />
