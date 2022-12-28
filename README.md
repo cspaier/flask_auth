@@ -91,7 +91,7 @@ After=network.target
 [Service]
 User=REMPLACER PAR UTILISATEUR UNIX
 Group=www-data
-WorkingDirectory=/CHEMIN/VERS/LE/DOSSIER/flask_auth/flask_auth
+WorkingDirectory=/CHEMIN/VERS/LE/DOSSIER/flask_auth
 Environment="PATH=/CHEMIN/VERS/LE/DOSSIER/flask_auth/venv/bin"
 ExecStart=/CHEMIN/VERS/LE/DOSSIER/flask_auth/venv/bin/gunicorn --config gunicorn_config.py wsgi:app
 
@@ -109,8 +109,8 @@ $ sudo systemctl enable flask_auth_.service
 Le fichier devra contenir la balise location suivante
 ```
 	<Location />
-		ProxyPass unix:/CHEMIN/VERS/LE/DOSSIER/flask_auth/flask_auth/flask_auth_.sock|http://127.0.0.1/
-		ProxyPassReverse unix:/CHEMIN/VERS/LE/DOSSIER/flask_auth/flask_auth/flask_auth_.sock|http://127.0.0.1/
+		ProxyPass unix:/CHEMIN/VERS/LE/DOSSIER/flask_auth/flask_auth_.sock|http://127.0.0.1/
+		ProxyPassReverse unix:/CHEMIN/VERS/LE/DOSSIER/flask_auth/flask_auth_.sock|http://127.0.0.1/
 	</Location>
 
 ```
